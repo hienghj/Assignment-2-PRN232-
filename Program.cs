@@ -32,7 +32,9 @@ builder.Services.AddScoped<CartService>();
 builder.Services.AddScoped<OrderService>();
 
 // Add JWT Authentication
-var jwtKey = builder.Configuration["Jwt:Key"] ?? "YourSuperSecretKeyThatIsAtLeast32CharactersLong2024!";
+var jwtKey = Environment.GetEnvironmentVariable("JWT_KEY") 
+    ?? builder.Configuration["Jwt:Key"] 
+    ?? "YourSuperSecretKeyThatIsAtLeast32CharactersLong2024!";
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
