@@ -112,6 +112,20 @@ namespace ClothingStore.API.Services
             var product = await _context.Products.FindAsync(id);
             if (product == null) return false;
 
+            // Remove related cart items first
+            var cartItems = await _context.CartItems.Where(c => c.ProductId == id).ToListAsync();
+            if (cartItems.Any())
+            {
+                _context.CartItems.RemoveRange(cartItems);
+            }
+
+            // Remove related order items
+            var orderItems = await _context.OrderItems.Where(o => o.ProductId == id).ToListAsync();
+            if (orderItems.Any())
+            {
+                _context.OrderItems.RemoveRange(orderItems);
+            }
+
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
 
