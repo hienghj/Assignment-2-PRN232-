@@ -695,6 +695,7 @@ async function renderOrdersPage() {
 
 // ===== MANAGE PRODUCTS PAGE =====
 let editingProductId = null;
+let editingImageUrl = null;
 
 async function renderManagePage(editId = null) {
     const main = document.getElementById('mainContent');
@@ -736,6 +737,7 @@ async function renderManagePage(editId = null) {
 function toggleProductForm(product = null) {
     const container = document.getElementById('productFormContainer');
     editingProductId = product ? product.id : null;
+    editingImageUrl = product ? product.imageUrl : null;
 
     if (container.innerHTML && !product) {
         container.innerHTML = '';
@@ -808,12 +810,6 @@ function toggleProductForm(product = null) {
         </div>
     `;
 
-    container.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-    // If editing a product with existing image URL, switch to URL tab
-    if (product && product.imageUrl) {
-        switchUploadTab('url');
-    }
 }
 
 async function showEditForm(id) {
@@ -832,11 +828,9 @@ async function handleProductSubmit(e) {
     btn.innerHTML = '<div class="loader-ring" style="width:20px;height:20px;border-width:2px;margin:0 auto;"></div> Saving...';
 
     try {
-        // Get image URL: from URL input, or from existing preview (edit mode)
+        // Get image URL: from URL input, or keep existing image when editing
         const urlInput = document.getElementById('pImage');
-        const previewImg = document.getElementById('previewImg');
-        let imageUrl = (urlInput && urlInput.value) ? urlInput.value :
-            (previewImg && previewImg.src && !previewImg.src.includes('about:blank')) ? previewImg.src : null;
+        let imageUrl = (urlInput && urlInput.value) ? urlInput.value : editingImageUrl;
         const fileInput = document.getElementById('pImageFile');
 
         if (fileInput && fileInput.files.length > 0) {
