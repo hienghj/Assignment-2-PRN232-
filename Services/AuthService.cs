@@ -89,8 +89,8 @@ namespace ClothingStore.API.Services
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-                issuer: _configuration["Jwt:Issuer"] ?? "ClothingStore",
-                audience: _configuration["Jwt:Audience"] ?? "ClothingStore",
+                issuer: _configuration["Jwt:Issuer"] ?? "ClothingStoreAPI",
+                audience: _configuration["Jwt:Audience"] ?? "ClothingStoreClient",
                 claims: claims,
                 expires: DateTime.UtcNow.AddDays(7),
                 signingCredentials: credentials
