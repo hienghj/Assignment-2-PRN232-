@@ -74,7 +74,9 @@ namespace ClothingStore.API.Services
         private string GenerateJwtToken(User user)
         {
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                _configuration["Jwt:Key"] ?? "YourSuperSecretKeyThatIsAtLeast32Characters!"));
+                Environment.GetEnvironmentVariable("JWT_KEY") 
+                ?? _configuration["Jwt:Key"] 
+                ?? "YourSuperSecretKeyThatIsAtLeast32CharactersLong2024!"));
 
             var claims = new[]
             {
