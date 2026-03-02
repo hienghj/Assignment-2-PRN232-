@@ -784,7 +784,7 @@ function toggleProductForm(product = null) {
                             </div>
                         </div>
                         <div id="uploadUrlSection" style="display:none;">
-                            <input type="url" class="form-input" id="pImage" value="${product?.imageUrl || ''}" placeholder="https://example.com/image.jpg" oninput="previewUrlImage(this.value)">
+                            <input type="text" class="form-input" id="pImage" value="${product?.imageUrl || ''}" placeholder="https://example.com/image.jpg">
                         </div>
                         <div id="imagePreview" style="display:${product?.imageUrl ? 'block' : 'none'};">
                             <div class="preview-container">
